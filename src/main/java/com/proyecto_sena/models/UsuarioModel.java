@@ -3,36 +3,31 @@ package com.proyecto_sena.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 public class UsuarioModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    public long getID() {
-        return ID;
-    }
+    private Long id;
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
+    private String nombre;
+    private String correo;
+    private String contrasena;
+    private String rol;
 
-    public String getNOMBRE() {
-        return NOMBRE;
-    }
+    // Getters y setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setNOMBRE(String NOMBRE) {
-        this.NOMBRE = NOMBRE;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getEMAIL() {
-        return EMAIL;
-    }
+    public String getCorreo() { return correo; }
+    public void setCorreo(String correo) { this.correo = correo; }
 
-    public void setEMAIL(String EMAIL) {
-        this.EMAIL = EMAIL;
-    }
+    public String getContrasena() { return contrasena; }
+    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
-    private long ID;
-    private String NOMBRE;
-    private String EMAIL;
+    public String getRol() { return rol; }
+    public void setRol(String rol) { this.rol = rol; }
 }
