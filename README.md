@@ -51,10 +51,19 @@ Tecnopc es una tienda virtual de productos tecnológicos con funcionalidades com
    - Crear una base de datos `tecnopc`
    - Configurar `application.properties`:
      ```properties
-     spring.datasource.url=jdbc:postgresql://localhost:5432/tecnopc
-     spring.datasource.username=tu_usuario
-     spring.datasource.password=tu_contraseña
+     # Puerto del servidor
+     server.port=8080
+
+     # Configuración de la base de datos PostgreSQL
+     spring.datasource.url=jdbc:mysql://localhost:3306/bd_tecnopc?useSSL=false&serverTimezone=UTC
+     spring.datasource.username=root
+     spring.datasource.password=root
+     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+     
+     # Configuración JPA
      spring.jpa.hibernate.ddl-auto=update
+     spring.jpa.show-sql=true
+     spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
      ```
 
 3. Ejecutar el proyecto:
@@ -79,8 +88,8 @@ Tecnopc es una tienda virtual de productos tecnológicos con funcionalidades com
 ## 🧠 Autor
 
 - **Alex Herrera Rodríguez**  
-- Ficha SENA: GA7-220501096  
-- Proyecto académico para evidencia AA3
+- Ficha SENA: 290881
+- Proyecto académico para Tecnopc
 
 ---
 
