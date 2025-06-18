@@ -1,33 +1,44 @@
 package com.proyecto_sena.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*;       // Anotaciones JPA para persistencia
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
-@Table(name = "usuario")
+/**
+ * Entidad que representa la tabla 'usuario' en la base de datos.
+ * Utiliza JPA para mapeo objeto-relacional (ORM).
+ * Utiliza Lombok para generar automáticamente getters, setters y constructor vacío.
+ */
+@NoArgsConstructor          // Genera constructor sin argumentos
+@Getter                     // Genera automáticamente todos los getters
+@Setter                     // Genera automáticamente todos los setters
+@Entity                     // Indica que esta clase es una entidad JPA
+@Table(name = "usuario")   // Define el nombre de la tabla en la base de datos
 public class UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id; // ID autogenerado por la base de datos (clave primaria)
 
-    private String nombre;
-    private String correo;
-    private String contrasena;
-    private String rol;
+    private String nombre;  // Nombre completo del usuario
 
-    // Getters y setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @Column(unique = true)
+    private String usuario; // Nombre de usuario único
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+    @Column(unique = true)
+    private String correo;  // Correo electrónico único
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    private String contrasena; // Contraseña del usuario
 
-    public String getContrasena() { return contrasena; }
-    public void setContrasena(String contrasena) { this.contrasena = contrasena; }
+    private String rol = "CLIENTE"; // Rol por defecto (puede ser CLIENTE, ADMIN, etc.)
 
-    public String getRol() { return rol; }
-    public void setRol(String rol) { this.rol = rol; }
+    /**
+     * Setter explícito para el ID.
+     * Aunque Lombok lo genera, se incluye manualmente para garantizar acceso
+     * desde controladores (por ejemplo, en actualizaciones PUT).
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

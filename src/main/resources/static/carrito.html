@@ -1,4 +1,5 @@
-<!-- carrito.html -->
+<!-- carrito.html: Página que muestra el contenido del carrito de compras -->
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,9 +9,12 @@
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
 <header>
     <nav>
-        <h1 class="logo">Tecnopc</h1>
+        <a href="index.html">
+            <img src="img/logo_tecnopc.png" alt="Tecnopc" class="logo-img">
+        </a>
         <ul class="nav-links">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
@@ -23,10 +27,16 @@
 
 <main>
     <h2>Tu carrito</h2>
-    <div id="carrito"></div>
+
+    <!-- Lista donde se mostrarán los productos -->
+    <ul id="lista-carrito"></ul>
+
+    <!-- Total a pagar -->
     <div class="total">
-        <strong>Total:</strong> $<span id="totalCarrito">0.00</span>
+        <strong>Total:</strong> $<span id="total-carrito">0</span>
     </div>
+
+    <!-- Botón para confirmar la compra -->
     <button id="confirmarCompra">Confirmar compra</button>
 </main>
 
@@ -35,5 +45,6 @@
 </footer>
 
 <script src="js/main.js"></script>
+
 </body>
 </html>

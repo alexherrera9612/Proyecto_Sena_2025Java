@@ -26,6 +26,11 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    public UsuarioModel obtenerPorCorreoYContrasena(String correo, String contrasena) {
+        return usuarioRepository.findByCorreoAndContrasena(correo, contrasena);
+    }
+
+
     public void eliminar(Long id) {
         usuarioRepository.deleteById(id);
     }

@@ -29,7 +29,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.5.0</version>
         </dependency>
-
         <!-- Spring Data JPA for database interaction -->
          <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -50,6 +49,14 @@
             <artifactId>spring-boot-devtools</artifactId>
             <version>3.5.0</version>
         </dependency>
+        <!-- Lambok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version> <!-- Puedes ajustar la versión según tu necesidad -->
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
