@@ -87,7 +87,7 @@ Tecnopc es una tienda virtual de productos tecnológicos con funcionalidades com
 
 ## 🧠 Autor
 
-- **Alex Herrera Rodríguez**  
+- **Alex Rodríguez**  
 - Ficha SENA: 290881
 - Proyecto académico para Tecnopc
 
