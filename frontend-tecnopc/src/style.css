@@ -1,0 +1,247 @@
+/* Reset básico */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f8fa;
+  color: #333;
+}
+
+.App {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  
+}
+
+/* NAVBAR */
+nav {
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  padding: 12px 24px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo {
+  height: 42px;
+  border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;   
+}
+
+.titulo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li a,
+.nav-links li strong {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  text-decoration: underline;
+  color: #333;
+    
+}
+
+/* MAIN */
+main {
+  margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 20px;
+}
+
+/* PRODUCTOS */
+.producto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 0 20px;
+  margin-bottom: 24px;
+  justify-items: center;
+  align-items: start;
+
+
+}
+
+.producto {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    border: 1px solid #e0e0e0;
+ 
+}
+
+.producto:hover {
+  transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.producto img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 6px;
+
+}
+
+/* BOTONES */
+button {
+  padding: 10px 18px;
+  background: linear-gradient(90deg, #007bff, #00c2ff);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #0056b3, #009ed9);
+}
+
+/* FORMULARIOS */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  gap: 12px;
+  background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ 
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* TOTAL Y MENSAJES */
+.total {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* CARRITO */
+.carrito-lista {
+  list-style: none;
+  padding: 0;
+    margin: 0;
+    
+}
+
+.carrito-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.08);
+}
+
+.carrito-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+  
+}
+
+.carrito-item h3 {
+  flex-grow: 1;
+  margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+.carrito-item p {
+  margin: 0;
+  color: #555;
+  font-size: 12px;
+  font-weight: 400;
+
+}
+/* FOOTER */
+.footer {
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  color: white;
+  padding: 20px 0;
+  margin-top: 40px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 20px;
+  display: flex;
+  text-align: center;
+}
+.footer a {
+  color: #00d4ff;
+  text-decoration: none;
+    transition: color 0.3s ease;
+
+}  

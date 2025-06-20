@@ -1,0 +1,11 @@
+/* src/components/ProductCard.css */
+.producto {
+  border: 1px solid #ccc;
+  padding: 16px;
+  text-align: center;
+  width: 200px;
+}
+.producto img {
+  max-width: 100%;
+  height: auto;
+}
