@@ -4,83 +4,96 @@ import com.proyecto_sena.models.LoginRequest;
 import com.proyecto_sena.models.UsuarioModel;
 import com.proyecto_sena.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-/**
- * Controlador REST para la gestión de usuarios.
- * Expone los endpoints para operaciones CRUD (crear, leer, actualizar y eliminar).
- */
- @RestController
-@RequestMapping("/api/usuarios") // Ruta base para todos los métodos
-@CrossOrigin(origins = "*") // Permite peticiones desde cualquier origen (CORS)
-
- public class UsuarioController {
+@RestController
+@RequestMapping("/api/usuarios")
+@CrossOrigin(origins = "*")
+public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService; // Servicio que maneja la lógica de negocio
+    private UsuarioService usuarioService;
 
-    /**
-     * Obtener todos los usuarios registrados.
-     * Método: GET
-     * URL: /api/usuarios
-     */
+    // 1. Listar todos los usuarios
     @GetMapping
-    public List<UsuarioModel> listarUsuarios() {
-        return usuarioService.listarUsuarios();
+    public ResponseEntity<List<UsuarioModel>> listarUsuarios() {
+        return ResponseEntity.ok(usuarioService.listarUsuarios());
     }
 
-    /**
-     * Obtener un usuario específico por su ID.
-     * Método: GET
-     * URL: /api/usuarios/{id}
-     */
+    // 2. Obtener un usuario por ID
     @GetMapping("/{id}")
-    public Optional<UsuarioModel> obtenerUsuario(@PathVariable("id") Long id) {
-        return usuarioService.obtenerPorId(id);
+    public ResponseEntity<?> obtenerUsuario(@PathVariable("id") Long id) {
+        Optional<UsuarioModel> usuario = usuarioService.obtenerPorId(id);
+        return usuario.isPresent()
+                ? ResponseEntity.ok(usuario.get())
+                : ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Usuario no encontrado"));
     }
 
-    /**
-     * Crear un nuevo usuario.
-     * Método: POST
-     * URL: /api/usuarios
-     * Body: JSON con nombre, correo, usuario y contraseña
-     */
+    // 3. Crear nuevo usuario
     @PostMapping
-    public UsuarioModel crearUsuario(@RequestBody UsuarioModel usuario) {
-        return usuarioService.guardar(usuario);
+    public ResponseEntity<?> crearUsuario(@RequestBody UsuarioModel usuario) {
+        try {
+            UsuarioModel creado = usuarioService.guardar(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(creado);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "❌ El correo o nombre de usuario ya están registrados."));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "❌ El correo o nombre de usuario ya están registrados."));
+        }
     }
 
-    /**
-     * Actualizar los datos de un usuario existente.
-     * Método: PUT
-     * URL: /api/usuarios/{id}
-     * Body: JSON con datos actualizados
-     */
+    // 4. Actualizar usuario existente
     @PutMapping("/{id}")
-    public UsuarioModel actualizarUsuario(@PathVariable("id") Long id, @RequestBody UsuarioModel usuario) {
-        usuario.setId(id); // Asegura que se actualice el usuario correcto
-        return usuarioService.guardar(usuario);
+    public ResponseEntity<?> actualizarUsuario(@PathVariable("id") Long id, @RequestBody UsuarioModel usuario) {
+        try {
+            usuario.setId(id);
+            UsuarioModel actualizado = usuarioService.guardar(usuario);
+            return ResponseEntity.ok(actualizado);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "❌ El correo o nombre de usuario ya están registrados."));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "❌ Error al actualizar usuario."));
+        }
     }
 
+    // 5. Iniciar sesión (Login)
     @PostMapping("/login")
-    public UsuarioModel login(@RequestBody LoginRequest loginRequest) {
-        String correo = loginRequest.getCorreo();
-        String contrasena = loginRequest.getContrasena();
-        return usuarioService.obtenerPorCorreoYContrasena(correo, contrasena);
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            String correo = loginRequest.getCorreo();
+            String contrasena = loginRequest.getContrasena();
+
+            UsuarioModel usuario = usuarioService.obtenerPorCorreoYContrasena(correo, contrasena);
+            if (usuario != null) {
+                return ResponseEntity.ok(usuario);
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(Map.of("error", "Usuario o contraseña incorrectos."));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "❌ Error en login."));
+        }
     }
 
-
-    /**
-     * Eliminar un usuario por su ID.
-     * Método: DELETE
-     * URL: /api/usuarios/{id}
-     */
+    // 6. Eliminar usuario
     @DeleteMapping("/{id}")
-    public void eliminarUsuario(@PathVariable("id") Long id) {
-        usuarioService.eliminar(id);
+    public ResponseEntity<?> eliminarUsuario(@PathVariable("id") Long id) {
+        try {
+            usuarioService.eliminar(id);
+            return ResponseEntity.ok(Map.of("mensaje", "✅ Usuario eliminado"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "❌ Error al eliminar usuario."));
+        }
     }
-
 }
