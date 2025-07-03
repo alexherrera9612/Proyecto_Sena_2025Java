@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
@@ -15,12 +14,22 @@ import './style.css';
 
 function App() {
   const [usuario, setUsuario] = useState(null);
+  const [destacados, setDestacados] = useState([]);
 
   useEffect(() => {
     const guardado = localStorage.getItem('usuarioLogueado');
     if (guardado) {
       setUsuario(JSON.parse(guardado));
     }
+
+    // Cargar productos destacados desde la API (solo 4 primeros)
+    fetch('http://localhost:8080/api/productos')
+      .then(res => res.json())
+      .then(data => {
+        const primeros = data.slice(0, 4); // los primeros 4
+        setDestacados(primeros);
+      })
+      .catch(err => console.error("Error cargando productos:", err));
   }, []);
 
   const cerrarSesion = () => {
@@ -28,6 +37,13 @@ function App() {
     setUsuario(null);
     window.location.href = '/';
     alert('Sesión cerrada exitosamente');
+  };
+
+  const agregarAlCarrito = (producto) => {
+    const carrito = JSON.parse(localStorage.getItem('lista-carrito')) || [];
+    carrito.push(producto);
+    localStorage.setItem('lista-carrito', JSON.stringify(carrito));
+    alert(`${producto.nombre} agregado al carrito`);
   };
 
   return (
@@ -47,7 +63,7 @@ function App() {
               {usuario && (
                 <>
                   <li><strong>👤 {usuario.nombre}</strong></li>
-                  <li><a href="#" onClick={cerrarSesion}>Cerrar sesión</a></li>
+                  <li><button onClick={cerrarSesion} className="logout-link">Cerrar sesión</button></li>
                 </>
               )}
             </ul>
@@ -59,32 +75,23 @@ function App() {
             <div>
               <h2>Productos Destacados</h2>
               <div className="producto-grid">
-                {[{
-                  id: 99,
-                  nombre: 'PC Gamer Ryzen 7',
-                  precio: 4500000,
-                  imagen: 'img/pcgamer.jpg'
-                }, {
-                  id: 100,
-                  nombre: 'Combo Oficina',
-                  precio: 1800000,
-                  imagen: 'img/combo.jpg'
-                }].map(prod => (
-                  <ProductCard key={prod.id} producto={prod} onAddToCart={(p) => {
-                    const carrito = JSON.parse(localStorage.getItem('lista-carrito')) || [];
-                    carrito.push(p);
-                    localStorage.setItem('lista-carrito', JSON.stringify(carrito));
-                    alert(`${p.nombre} agregado al carrito`);
-                  }} />
+                {destacados.map(prod => (
+                  <ProductCard
+                    key={prod.id}
+                    producto={{
+                      ...prod,
+                      imagen: prod.imagenUrl // para mantener compatibilidad con ProductCard
+                    }}
+                    onAddToCart={agregarAlCarrito}
+                  />
                 ))}
               </div>
               <footer className="footer">
-  <div className="footer-container">
-    <p>© {new Date().getFullYear()} TecnoPC.</p>
-    <p>Desarrollado por ALEXANDER RODRIGUEZ</p>
-  </div>
-</footer>
-
+                <div className="footer-container">
+                  <p>© {new Date().getFullYear()} TecnoPC.</p>
+                  <p>Desarrollado por ALEXANDER RODRIGUEZ</p>
+                </div>
+              </footer>
             </div>
           } />
           <Route path="/catalogo" element={<ProductList />} />
@@ -98,3 +105,8 @@ function App() {
 }
 
 export default App;
+// This is the main App component that sets up the routing and navigation for the application.
+// It includes a navigation bar, routes for different pages, and displays featured products on the home page.
+// It also handles user login/logout and adding products to the cart.
+// The featured products are fetched from the backend and displayed using the ProductCard component.
+// The application uses React Router for navigation and localStorage for session management and cart storage.

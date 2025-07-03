@@ -56,7 +56,9 @@
             <version>1.18.24</version> <!-- Puedes ajustar la versión según tu necesidad -->
             <scope>provided</scope>
         </dependency>
+        <!-- Spring Boot Starter Security (para seguridad) -->
 
+        
     </dependencies>
     <build>
         <plugins>

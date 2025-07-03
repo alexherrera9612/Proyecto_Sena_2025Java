@@ -1,6 +1,8 @@
 package com.proyecto_sena.models;
 
 import jakarta.persistence.*;       // Anotaciones JPA para persistencia
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +12,9 @@ import lombok.Setter;
  * Utiliza JPA para mapeo objeto-relacional (ORM).
  * Utiliza Lombok para generar automáticamente getters, setters y constructor vacío.
  */
+@Data // Genera automáticamente getters y setters para todos los campos
+@AllArgsConstructor // Genera constructor con todos los argumentos
 @NoArgsConstructor          // Genera constructor sin argumentos
-@Getter                     // Genera automáticamente todos los getters
-@Setter                     // Genera automáticamente todos los setters
 @Entity                     // Indica que esta clase es una entidad JPA
 @Table(name = "usuario")   // Define el nombre de la tabla en la base de datos
 public class UsuarioModel {
@@ -32,13 +34,10 @@ public class UsuarioModel {
     private String contrasena; // Contraseña del usuario
 
     private String rol = "CLIENTE"; // Rol por defecto (puede ser CLIENTE, ADMIN, etc.)
-
-    /**
-     * Setter explícito para el ID.
-     * Aunque Lombok lo genera, se incluye manualmente para garantizar acceso
-     * desde controladores (por ejemplo, en actualizaciones PUT).
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
+
+// Esta clase UsuarioModel representa un usuario en el sistema.
+// Utiliza JPA para mapearse a la tabla 'usuario' en la base de datos.
+// Incluye campos como id, nombre, usuario, correo, contraseña y rol.
+// Lombok se usa para simplificar el código generando automáticamente los métodos getter, setter y un constructor sin argumentos.
+// El campo 'rol' tiene un valor por defecto de "CLIENTE", pero puede ser modificado según las necesidades del sistema. 

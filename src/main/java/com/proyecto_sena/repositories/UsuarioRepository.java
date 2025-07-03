@@ -21,3 +21,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioModel, Long> {
     // Login por nombre de usuario y contraseña (si lo deseas usar también)
     UsuarioModel findByUsuarioAndContrasena(String usuario, String contrasena);
 }
+// Este repositorio UsuarioRepository extiende JpaRepository para proporcionar acceso a la base de datos.
+// Incluye métodos para buscar usuarios por correo y nombre de usuario, así como para realizar el login.
+// Utiliza Optional para manejar casos donde no se encuentre un usuario con el correo o nombre de usuario especificado.
+// También incluye métodos para buscar por correo y contraseña, y por nombre de usuario y contraseña, para el proceso de inicio de sesión.

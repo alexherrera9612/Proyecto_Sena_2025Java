@@ -42,6 +42,8 @@ function LoginForm() {
         setTipoMensaje('exito');
         setMensaje('✅ Inicio de sesión exitoso. Redirigiendo...');
         setTimeout(() => navigate('/catalogo'), 1500);
+        window.location.href = '/catalogo'; // Recargar la página para reflejar el usuario logueado
+
       })
       .catch(err => {
         setTipoMensaje('error');

@@ -7,14 +7,15 @@ function ProductList() {
   const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    // Cargar productos como en main.js
-    const productosEjemplo = [
-      { id: 1, nombre: 'Laptop Lenovo', precio: 2200000, imagen: 'img/laptop1.jpg' },
-      { id: 2, nombre: 'Monitor ASUS', precio: 950000, imagen: 'img/monitor1.jpg' },
-      { id: 3, nombre: 'Teclado Mecánico', precio: 250000, imagen: 'img/teclado1.jpg' },
-      { id: 4, nombre: 'Mouse Logitech', precio: 180000, imagen: 'img/mouse1.jpg' }
-    ];
-    setProductos(productosEjemplo);
+    fetch('http://localhost:8080/api/productos') // Cambia el puerto si tu backend usa otro
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Error al cargar productos');
+        }
+        return res.json();
+      })
+      .then(data => setProductos(data))
+      .catch(err => console.error('Error:', err));
   }, []);
 
   const agregarAlCarrito = (producto) => {
@@ -34,3 +35,5 @@ function ProductList() {
 }
 
 export default ProductList;
+// This component fetches the list of products from the backend and displays them using the ProductCard component.
+// It also handles adding products to the cart by storing them in localStorage.
